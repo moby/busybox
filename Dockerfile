@@ -12,4 +12,5 @@
 
 FROM windowsservercore
 ADD http://frippery.org/files/busybox/busybox.exe /
+RUN setx /M Path "c:\;%Path%"
 ENTRYPOINT ["/busybox.exe"]
