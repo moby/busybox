@@ -11,5 +11,8 @@
 # http://github.com/jhowardmsft/busybox
 
 FROM windowsservercore
-ADD http://frippery.org/files/busybox/busybox.exe /
-ENTRYPOINT ["/busybox.exe"]
+RUN mkdir C:\busybox
+ADD http://frippery.org/files/busybox/busybox.exe /busybox/
+RUN setx /M PATH "C:\busybox;%PATH%"
+RUN powershell busybox.exe --list ^|%{$nul = cmd /c mklink C:\busybox\$_.exe busybox.exe}
+ENTRYPOINT ["C:/busybox/busybox.exe"]
