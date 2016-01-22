@@ -11,5 +11,9 @@
 # http://github.com/jhowardmsft/busybox
 
 FROM windowsservercore
-ADD http://frippery.org/files/busybox/busybox.exe /
-ENTRYPOINT ["/busybox.exe"]
+RUN mkdir C:\busybox
+ADD http://frippery.org/files/busybox/busybox.exe /busybox/
+ADD alias.ps1 /busybox/
+RUN setx /M PATH "C:\busybox;%PATH%"
+RUN powershell C:/busybox/alias.ps1
+ENTRYPOINT ["C:/busybox/busybox.exe"]
