@@ -10,7 +10,7 @@
 #
 # http://github.com/jhowardmsft/busybox
 
-FROM windowsservercore
+FROM microsoft/windowsservercore
 RUN mkdir C:\tmp && mkdir C:\busybox
 ADD http://frippery.org/files/busybox/busybox.exe /busybox/
 RUN setx /M PATH "C:\busybox;%PATH%"
