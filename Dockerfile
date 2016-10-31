@@ -1,7 +1,5 @@
-# escape=`
-
 # Source: http://frippery.org/busybox/
-# This Dockerfile builds a (32-bit) busybox image which is suitable for
+# This Dockerfile builds a (32-bit) busybox images which is suitable for
 # running many of the integration-cli tests for Docker against a Windows
 # daemon. It will not run on nanoserver as that is 64-bit only.
 #
@@ -13,9 +11,8 @@
 # http://github.com/jhowardmsft/busybox
 
 FROM microsoft/windowsservercore
-SHELL ["powershell", "-command"]
-# /tmp is created as it's needed by CI tests in Docker.
-RUN mkdir C:\tmp; mkdir C:\busybox; setx /M PATH $('C:\busybox;'+$env:PATH)
-ADD http://frippery.org/files/busybox/busybox.exe c:\busybox\
-RUN busybox.exe --list | %{New-Item -Path C:\busybox\$_.exe -ItemType SymbolicLink -Value C:\busybox\busybox.exe}
-ENTRYPOINT ["C:\\busybox\\busybox.exe"]
+RUN mkdir C:\tmp && mkdir C:\busybox
+ADD http://frippery.org/files/busybox/busybox.exe /busybox/
+RUN setx /M PATH "C:\busybox;%PATH%"
+RUN powershell busybox.exe --list ^|%{$nul = cmd /c mklink C:\busybox\$_.exe busybox.exe}
+ENTRYPOINT ["C:/busybox/busybox.exe"]
