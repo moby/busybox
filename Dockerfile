@@ -15,4 +15,4 @@ RUN mkdir C:\tmp && mkdir C:\busybox
 ADD http://frippery.org/files/busybox/busybox.exe /busybox/
 RUN setx /M PATH "C:\busybox;%PATH%"
 RUN powershell busybox.exe --list ^|%{$nul = cmd /c mklink C:\busybox\$_.exe busybox.exe}
-ENTRYPOINT ["C:/busybox/busybox.exe"]
+CMD ["C:/busybox/busybox.exe"]
