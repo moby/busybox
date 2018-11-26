@@ -11,8 +11,8 @@
 # http://github.com/jhowardmsft/busybox
 
 FROM microsoft/windowsservercore
-RUN mkdir C:\tmp && mkdir C:\busybox
-ADD http://frippery.org/files/busybox/busybox.exe /busybox/
-RUN setx /M PATH "C:\busybox;%PATH%"
-RUN powershell busybox.exe --list ^|%{$nul = cmd /c mklink C:\busybox\$_.exe busybox.exe}
-CMD ["C:/busybox/busybox.exe"]
+RUN mkdir C:\tmp && mkdir C:\bin
+ADD http://frippery.org/files/busybox/busybox.exe /bin/
+RUN setx /M PATH "C:\bin;%PATH%"
+RUN powershell busybox.exe --list ^|%{$nul = cmd /c mklink C:\bin\$_.exe busybox.exe}
+CMD ["sh"]
