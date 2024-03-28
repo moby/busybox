@@ -10,9 +10,9 @@
 #
 # http://github.com/jhowardmsft/busybox
 
-FROM microsoft/windowsservercore
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 RUN mkdir C:\tmp && mkdir C:\bin
-ADD http://frippery.org/files/busybox/busybox.exe /bin/
+RUN curl -LO http://frippery.org/files/busybox/busybox.exe
 RUN setx /M PATH "C:\bin;%PATH%"
-RUN powershell busybox.exe --list ^|%{$nul = cmd /c mklink C:\bin\$_.exe busybox.exe}
+RUN powershell C:\busybox.exe --list ^|%{$nul = cmd /c mklink C:\bin\$_.exe C:\busybox.exe}
 CMD ["sh"]
